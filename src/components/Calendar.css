@@ -1,0 +1,21 @@
+@import "tailwindcss";
+
+.status-present {
+  /*  background-color: #90ee90 !important;*/
+  @apply bg-green-300 hover:bg-green-400;
+}
+
+.status-absent {
+  /*  background-color: #ff6347 !important;*/
+  @apply bg-red-300 hover:bg-red-400;
+}
+
+.status-leave {
+  /*  background-color: #ffa500 !important;*/
+  @apply bg-amber-300 hover:bg-amber-400;
+}
+
+.weekend {
+  /*  background-color: #e0e0e0;*/
+  @apply bg-slate-300 hover:bg-slate-500;
+}
