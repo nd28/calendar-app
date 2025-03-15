@@ -3,7 +3,10 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
+  "homepage": "https://nd28.github.io/calendar-app/",
   "scripts": {
+    "deploy": "gh-pages -d dist",
+    "predeploy": "rsbuild build",
     "build": "rsbuild build",
     "check": "biome check --write",
     "dev": "rsbuild dev --open",
@@ -27,6 +30,7 @@
     "@rsbuild/core": "^1.2.16",
     "@rsbuild/plugin-react": "^1.1.1",
     "autoprefixer": "^10.4.21",
+    "gh-pages": "^6.3.0",
     "postcss": "^8.5.3",
     "tailwindcss": "^4.0.14"
   }
