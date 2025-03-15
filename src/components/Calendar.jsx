@@ -58,7 +58,7 @@ const Calendar = () => {
   );
 
   return (
-    <div className={'calender-container'}>
+    <div className={'calender-container w-full max-w-xl'}>
       <CalendarHeader
         currentDate={currentDate}
         onPrevMonth={handlePrevMonth}
