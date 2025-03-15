@@ -11,4 +11,7 @@ export default defineConfig({
   server: {
     base: '/calendar-app',
   },
+  html: {
+    template: './static/index.html',
+  },
 });
