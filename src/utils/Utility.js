@@ -10,15 +10,6 @@ class Utility {
   }
 
   /**
-   * Formats a date to a string (YYYY-MM-DD)
-   * @param {Date} date - The date to format
-   * @returns {string} Formatted date string
-   */
-  static formatDate(date) {
-    return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
-  }
-
-  /**
    * Capitalizes the first letter of a string
    * @param {string} str - The string to capitalize
    * @returns {string} Capitalized string

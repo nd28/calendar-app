@@ -12,6 +12,11 @@ class AttendanceManager extends DataManager {
   getAttenance(date) {
     return this.getData(date);
   }
+
+  validateData(value) {
+    const validStatuses = ['present', 'absent', 'leave'];
+    return typeof value === 'string' && validStatuses.includes(value.toLowerCase());
+  }
 }
 
 export default AttendanceManager;

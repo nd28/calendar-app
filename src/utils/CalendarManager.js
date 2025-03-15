@@ -1,12 +1,17 @@
 import AttendanceManager from '@/utils/AttendanceManager.js';
 import WorklogManager from '@/utils/WorklogManager.js';
 import Utility from '@/utils/Utility.js';
+import DataImporterExporter from '@/utils/DataImporterExporter.js';
 
 class CalendarManager {
   constructor() {
     this.currentDate = new Date();
     this.attendanceManager = new AttendanceManager();
     this.worklogManager = new WorklogManager();
+    this.dataImporterExporter = new DataImporterExporter(
+      this.attendanceManager,
+      this.worklogManager,
+    );
   }
 
   getDaysInMonth(year, month) {
@@ -71,6 +76,14 @@ class CalendarManager {
     });
 
     return {presentDays, absentDays, leaveDays};
+  }
+
+  exportData() {
+    this.dataImporterExporter.exportData();
+  }
+
+  importData(file, overwrite = true) {
+    return this.dataImporterExporter.importData(file, overwrite);
   }
 }
 

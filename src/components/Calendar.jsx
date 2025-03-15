@@ -5,6 +5,7 @@ import CalendarHeader from '@/components/CalendarHeader.jsx';
 import CalendarGrid from '@/components/CalendarGrid.jsx';
 import CalendarDetails from '@/components/CalendarDetails.jsx';
 import {Card, CardContent, CardHeader, CardTitle} from '@/components/ui/card.jsx';
+import DataImportExport from '@/components/DataImportExport.jsx';
 
 const Calendar = () => {
   const [calendarManager] = useState(new CalendarManager());
@@ -63,6 +64,11 @@ const Calendar = () => {
         currentDate={currentDate}
         onPrevMonth={handlePrevMonth}
         onNextMonth={handleNextMonth}
+      />
+
+      <DataImportExport
+        calendarManager={calendarManager}
+        onImportSuccess={updateCalendar}
       />
 
       <Card className="attendance-summary mb-4">
