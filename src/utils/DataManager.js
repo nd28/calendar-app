@@ -1,4 +1,4 @@
-import Utility from "./Utility.js";
+import Utility from '@/utils/Utility.js';
 
 class DataManager {
   constructor(storageKey) {
@@ -9,7 +9,7 @@ class DataManager {
 
 // Abstact methods (to be implemented by subclasses)
   ab() {
-    throw new Error("Method 'loadFromStorage()' must be implemented.");
+    throw new Error('Method \'loadFromStorage()\' must be implemented.');
   }
 
   save() {

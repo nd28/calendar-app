@@ -1,17 +1,17 @@
-import DataManager from "./DataManager.js";
+import DataManager from '@/utils/DataManager.js';
 
 class WorklogManager extends DataManager {
-    constructor() {
-        super('worklogData')
-    }
+  constructor() {
+    super('worklogData');
+  }
 
-    addWorklog(date, log) {
-        this.setData(date, log)
-    }
+  addWorklog(date, log) {
+    this.setData(date, log);
+  }
 
-    getWorklog(date) {
-        return this.getData(date)
-    }
+  getWorklog(date) {
+    return this.getData(date);
+  }
 }
 
 export default WorklogManager;

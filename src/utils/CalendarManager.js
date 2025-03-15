@@ -1,6 +1,6 @@
-import AttendanceManager from "./AttendanceManager.js";
-import WorklogManager from "./WorklogManager.js";
-import Utility from "./Utility.js";
+import AttendanceManager from '@/utils/AttendanceManager.js';
+import WorklogManager from '@/utils/WorklogManager.js';
+import Utility from '@/utils/Utility.js';
 
 class CalendarManager {
   constructor() {
@@ -18,7 +18,7 @@ class CalendarManager {
   }
 
   markAttendance(date, status) {
-    this.attendanceManager.markAttendance(date, status)
+    this.attendanceManager.markAttendance(date, status);
   }
 
   addWorklog(date, log) {
@@ -26,7 +26,7 @@ class CalendarManager {
   }
 
   getAttendance(date) {
-    return this.attendanceManager.getAttenance(date)
+    return this.attendanceManager.getAttenance(date);
   }
 
   getWorklog(date) {
@@ -43,16 +43,35 @@ class CalendarManager {
 
     // Add actual days
     Utility.rangeWithLambda(1, daysInMonth, day => {
-      const date = new Date(year, month, day)
+      const date = new Date(year, month, day);
+      const isWeekend = date.getDay() === 0 || date.getDay() === 6; // Sunday or Saturday
       monthData.push({
         date,
         worklog: this.getWorklog(date),
-        attendance: this.getAttendance(date)
-      })
-    })
+        attendance: this.getAttendance(date),
+        isWeekend,
+      });
+    });
 
     return monthData;
   }
+
+  getAttendanceSummary(year, month) {
+    const daysInMonth = this.getDaysInMonth(year, month);
+    let presentDays = 0;
+    let absentDays = 0;
+    let leaveDays = 0;
+
+    Utility.rangeWithLambda(1, daysInMonth, (day) => {
+      const date = new Date(year, month, day);
+      const status = this.getAttendance(date);
+      if (status === 'present') presentDays++;
+      else if (status === 'absent') absentDays++;
+      else if (status === 'leave') leaveDays++;
+    });
+
+    return {presentDays, absentDays, leaveDays};
+  }
 }
 
-export default CalendarManager
+export default CalendarManager;

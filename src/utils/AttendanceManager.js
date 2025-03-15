@@ -1,4 +1,4 @@
-import DataManager from "./DataManager.js";
+import DataManager from '@/utils/DataManager.js';
 
 class AttendanceManager extends DataManager {
   constructor() {
@@ -6,7 +6,7 @@ class AttendanceManager extends DataManager {
   }
 
   markAttendance(date, status) {
-    this.setData(date, status)
+    this.setData(date, status);
   }
 
   getAttenance(date) {
