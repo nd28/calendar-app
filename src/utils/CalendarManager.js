@@ -14,7 +14,7 @@ class CalendarManager {
   }
 
   getFirstDayOfMonth(year, month) {
-    return new Date(year, month + 1).getDay();
+    return new Date(year, month, 1).getDay();
   }
 
   markAttendance(date, status) {
