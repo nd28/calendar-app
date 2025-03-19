@@ -1,24 +1,24 @@
 import React from 'react';
 import Utility from '@/utils/Utility';
-import {Dialog, DialogClose, DialogContent, DialogHeader, DialogTitle} from '@/components/ui/dialog.jsx';
+import {Dialog, DialogContent, DialogHeader, DialogTitle} from '@/components/ui/dialog.jsx';
 import {Button} from '@/components/ui/button.jsx';
 import {Textarea} from '@/components/ui/textarea.jsx';
 import {ToggleGroup, ToggleGroupItem} from '@/components/ui/toggle-group';
 
 const CalendarDetails = ({
-                           selectedDate,
-                           onMarkAttendance,
-                           onAddWorklog,
-                           onCancel,
-                           getAttendance,
-                           getWorklog,
-                         }) => {
+  selectedDate,
+  onMarkAttendance,
+  onAddWorklog,
+  onCancel,
+  getAttendance,
+  getWorklog,
+}) => {
   const handleSubmitWorklog = (e) => {
     e.preventDefault();
     const worklog = e.target.worklog.value;
     if (worklog) {
       onAddWorklog(worklog);
-//      e.target.worklog.value = '';
+      //      e.target.worklog.value = '';
     }
   };
 
@@ -26,12 +26,20 @@ const CalendarDetails = ({
     <Dialog onOpenChange={onCancel} defaultOpen>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle className={'text-xl'}>{selectedDate.toDateString()}</DialogTitle>
+          <DialogTitle className={'text-xl'}>
+            {selectedDate.toDateString()}
+          </DialogTitle>
         </DialogHeader>
         <div className="attendance-controls mb-4">
-          <h4 className="scroll-m-20 text-lg font-semibold tracking-tight2">Mark Attendance</h4>
+          <h4 className="scroll-m-20 text-lg font-semibold tracking-tight2">
+            Mark Attendance
+          </h4>
           <div className="space-x-2">
-            <ToggleGroup type="single" onValueChange={onMarkAttendance} value={getAttendance(selectedDate)}>
+            <ToggleGroup
+              type="single"
+              onValueChange={onMarkAttendance}
+              value={getAttendance(selectedDate)}
+            >
               <ToggleGroupItem value="present">
                 {Utility.capitalize('present')}
               </ToggleGroupItem>
@@ -55,12 +63,18 @@ const CalendarDetails = ({
         </div>
 
         <div className="worklog-controls mb-4">
-          <h4 className="scroll-m-20 text-lg font-semibold tracking-tight2">Add Worklog</h4>
+          <h4 className="scroll-m-20 text-lg font-semibold tracking-tight2">
+            Add Worklog
+          </h4>
           <form onSubmit={handleSubmitWorklog}>
-            <Textarea name="worklog" placeholder="Enter worklog..." defaultValue={getWorklog(selectedDate)} className="mb-2" rows={5}/>
-            <Button type="submit">
-              Add Worklog
-            </Button>
+            <Textarea
+              name="worklog"
+              placeholder="Enter worklog..."
+              defaultValue={getWorklog(selectedDate)}
+              className="mb-2"
+              rows={5}
+            />
+            <Button type="submit">Add Worklog</Button>
           </form>
         </div>
 
@@ -72,7 +86,9 @@ const CalendarDetails = ({
           </p>
           <p className="text-sm">
             Worklog:
-            <pre>{getWorklog(selectedDate) || 'No worklog'}</pre>
+            <pre className={'text-wrap text-sm'}>
+              {getWorklog(selectedDate) || 'No worklog'}
+            </pre>
           </p>
         </div>
       </DialogContent>
