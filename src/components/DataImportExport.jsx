@@ -65,11 +65,11 @@ const DataImportExport = ({calendarManager, onImportSuccess}) => {
 
   return (
     <Card className="mb-4">
-      <CardHeader>
-        <CardTitle>Import/Export Data</CardTitle>
-      </CardHeader>
+      {/*<CardHeader>*/}
+      {/*<CardTitle>Import/Export Data</CardTitle>*/}
+      {/*</CardHeader>*/}
       <CardContent>
-        <div className="flex space-x-4 mb-4">
+        <div className="flex space-x-4">
           <Button onClick={handleExport}>
             Export Data
           </Button>

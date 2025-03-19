@@ -1,13 +1,15 @@
 import React from 'react';
 import Utility from '@/utils/Utility';
-import {Card, CardContent, CardHeader, CardTitle} from '@/components/ui/card.jsx';
+import {Dialog, DialogClose, DialogContent, DialogHeader, DialogTitle} from '@/components/ui/dialog.jsx';
 import {Button} from '@/components/ui/button.jsx';
 import {Textarea} from '@/components/ui/textarea.jsx';
+import {ToggleGroup, ToggleGroupItem} from '@/components/ui/toggle-group';
 
 const CalendarDetails = ({
                            selectedDate,
                            onMarkAttendance,
                            onAddWorklog,
+                           onCancel,
                            getAttendance,
                            getWorklog,
                          }) => {
@@ -16,36 +18,49 @@ const CalendarDetails = ({
     const worklog = e.target.worklog.value;
     if (worklog) {
       onAddWorklog(worklog);
-      e.target.worklog.value = '';
+//      e.target.worklog.value = '';
     }
   };
 
   return (
-    <Card className="mt-4">
-      <CardHeader>
-        <CardTitle>{selectedDate.toDateString()}</CardTitle>
-      </CardHeader>
-      <CardContent>
+    <Dialog onOpenChange={onCancel} defaultOpen>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle className={'text-xl'}>{selectedDate.toDateString()}</DialogTitle>
+        </DialogHeader>
         <div className="attendance-controls mb-4">
-          <h4 className="text-lg font-semibold mb-2">Mark Attendance</h4>
+          <h4 className="scroll-m-20 text-lg font-semibold tracking-tight2">Mark Attendance</h4>
           <div className="space-x-2">
-            <Button onClick={() => onMarkAttendance('present')} variant="default">
-              {Utility.capitalize('present')}
-            </Button>
-            <Button onClick={() => onMarkAttendance('absent')} variant="destructive">
-              {Utility.capitalize('absent')}
-            </Button>
-            <Button onClick={() => onMarkAttendance('leave')} variant="secondary">
-              {Utility.capitalize('leave')}
-            </Button>
+            <ToggleGroup type="single" onValueChange={onMarkAttendance} value={getAttendance(selectedDate)}>
+              <ToggleGroupItem value="present">
+                {Utility.capitalize('present')}
+              </ToggleGroupItem>
+              <ToggleGroupItem value="absent">
+                {Utility.capitalize('absent')}
+              </ToggleGroupItem>
+              <ToggleGroupItem value="leave">
+                {Utility.capitalize('leave')}
+              </ToggleGroupItem>
+            </ToggleGroup>
+            {/*<Button onClick={() => onMarkAttendance('present')} variant="default">*/}
+            {/*  {Utility.capitalize('present')}*/}
+            {/*</Button>*/}
+            {/*<Button onClick={() => onMarkAttendance('absent')} variant="destructive">*/}
+            {/*  {Utility.capitalize('absent')}*/}
+            {/*</Button>*/}
+            {/*<Button onClick={() => onMarkAttendance('leave')} variant="secondary">*/}
+            {/*  {Utility.capitalize('leave')}*/}
+            {/*</Button>*/}
           </div>
         </div>
 
         <div className="worklog-controls mb-4">
-          <h4 className="text-lg font-semibold mb-2">Add Worklog</h4>
+          <h4 className="scroll-m-20 text-lg font-semibold tracking-tight2">Add Worklog</h4>
           <form onSubmit={handleSubmitWorklog}>
-            <Textarea name="worklog" placeholder="Enter worklog..." className="mb-2"/>
-            <Button type="submit">Add Worklog</Button>
+            <Textarea name="worklog" placeholder="Enter worklog..." defaultValue={getWorklog(selectedDate)} className="mb-2" rows={5}/>
+            <Button type="submit">
+              Add Worklog
+            </Button>
           </form>
         </div>
 
@@ -56,11 +71,12 @@ const CalendarDetails = ({
             {Utility.capitalize(getAttendance(selectedDate)) || 'Not marked'}
           </p>
           <p className="text-sm">
-            Worklog: {getWorklog(selectedDate) || 'No worklog'}
+            Worklog:
+            <pre>{getWorklog(selectedDate) || 'No worklog'}</pre>
           </p>
         </div>
-      </CardContent>
-    </Card>
+      </DialogContent>
+    </Dialog>
   );
 };
 

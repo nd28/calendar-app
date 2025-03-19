@@ -1,29 +1,33 @@
 // src/components/CalendarGrid.jsx
 import React from 'react';
+import {Card} from '@/components/ui/card.jsx';
+import {FileClock} from 'lucide-react';
 
-const CalendarGrid = ({monthData, onDateClick}) => {
+const CalendarGrid = ({monthData, onDateClick, selectedDate}) => {
   return (
-    <div className="grid grid-cols-7 gap-[2px] bg-gray-100">
+    <div className="grid grid-cols-7 gap-[2px]">
       {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(day => (
-        <div
+        <Card
           key={day}
-          className="calendar-day-header bg-gray-800 text-white p-2 text-center text-sm"
+          className="calendar-day-header bg-stone-800 text-white p-2 text-center text-sm"
         >
           {day}
-        </div>
+        </Card>
       ))}
 
       {monthData.map((day, index) => (
-        <div
+        <Card
           key={index}
-          className={`calendar-day min-h-[80px] p-2 text-center cursor-pointer
-                        ${day ? 'bg-slate-50 hover:bg-blue-200' : 'bg-gray-200'}
+          className={`calendar-day min-h-[90px] p-2 text-center cursor-pointer
+                        ${day ? 'bg-slate-50 dark:bg-slate-700 hover:outline-blue-500 hover:outline-2' : 'bg-transparent border-0 shadow-none'}
+                        ${day?.date === selectedDate ? 'outline-blue-500 outline-2' : ''}
                         ${day?.attendance ? `status-${day.attendance}` : ''}
-                        ${day?.isWeekend ? 'bg-slate-200 hover:bg-slate-300' : ''}`}
+                        ${day?.isWeekend ? 'opacity-50' : ''}`}
           onClick={() => onDateClick(day)}
         >
-          {day ? day.date.getDate() : ''}
-        </div>
+          {day?.date.getDate()}
+          {day?.worklog && <FileClock size={16} strokeWidth={1}/>}
+        </Card>
       ))}
     </div>
   );

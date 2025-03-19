@@ -6,6 +6,7 @@ import CalendarGrid from '@/components/CalendarGrid.jsx';
 import CalendarDetails from '@/components/CalendarDetails.jsx';
 import {Card, CardContent, CardHeader, CardTitle} from '@/components/ui/card.jsx';
 import DataImportExport from '@/components/DataImportExport.jsx';
+import {Dialog, DialogContent} from '@/components/ui/dialog.jsx';
 
 const Calendar = () => {
   const [calendarManager] = useState(new CalendarManager());
@@ -30,6 +31,10 @@ const Calendar = () => {
 
   const handleNextMonth = () => {
     setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() + 1));
+  };
+
+  const handleCancelSelectedDate = (day) => {
+    setSelectedDate(null);
   };
 
   const handleDateClick = (day) => {
@@ -60,15 +65,15 @@ const Calendar = () => {
 
   return (
     <div className={'calender-container w-full max-w-xl'}>
+      <DataImportExport
+        calendarManager={calendarManager}
+        onImportSuccess={updateCalendar}
+      />
+
       <CalendarHeader
         currentDate={currentDate}
         onPrevMonth={handlePrevMonth}
         onNextMonth={handleNextMonth}
-      />
-
-      <DataImportExport
-        calendarManager={calendarManager}
-        onImportSuccess={updateCalendar}
       />
 
       <Card className="attendance-summary mb-4">
@@ -76,23 +81,24 @@ const Calendar = () => {
           <CardTitle>Monthly Attendance Summary</CardTitle>
         </CardHeader>
         <CardContent>
-          <p>Present: {presentDays}</p>
-          <p>Absent: {absentDays}</p>
-          <p>Leave: {leaveDays}</p>
+          <ul className="ml-6 list-disc [&>li]:mt-2">
+            <li>Present Days: {presentDays}</li>
+            <li>Absent Days: {absentDays}</li>
+            <li>Leave Days: {leaveDays}</li>
+          </ul>
         </CardContent>
       </Card>
 
-      <CalendarGrid monthData={monthData} onDateClick={handleDateClick}/>
+      <CalendarGrid monthData={monthData} onDateClick={handleDateClick} selectedDate={selectedDate}/>
 
-      {selectedDate && (
-        <CalendarDetails
-          selectedDate={selectedDate}
-          onMarkAttendance={handleMarkAttendance}
-          onAddWorklog={handleAddWorklog}
-          getAttendance={calendarManager.getAttendance.bind(calendarManager)}
-          getWorklog={calendarManager.getWorklog.bind(calendarManager)}
-        />
-      )}
+      {selectedDate && <CalendarDetails
+        selectedDate={selectedDate}
+        onMarkAttendance={handleMarkAttendance}
+        onAddWorklog={handleAddWorklog}
+        onCancel={handleCancelSelectedDate}
+        getAttendance={calendarManager.getAttendance.bind(calendarManager)}
+        getWorklog={calendarManager.getWorklog.bind(calendarManager)}
+      />}
     </div>
   );
 };
