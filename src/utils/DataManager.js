@@ -1,3 +1,4 @@
+// src/utils/DataManager.js
 import DateUtility from '@/utils/DateUtility.js';
 
 class DataManager {
@@ -46,7 +47,8 @@ class DataManager {
    */
   mergeData(newData) {
     Object.entries(newData).forEach(([key, value]) => {
-      if (DateUtility.isValidDate(key) && this.validateData(value)) { // Validate key as date
+      if (DateUtility.isValidDate(key) && this.validateData(value)) {
+        // Validate key as date
         this.data.set(key, value);
       }
     });
@@ -60,7 +62,8 @@ class DataManager {
   replaceData(newData) {
     this.data.clear();
     Object.entries(newData).forEach(([key, value]) => {
-      if (DateUtility.isValidDate(key) && this.validateData(value)) { // Validate key as date
+      if (DateUtility.isValidDate(key) && this.validateData(value)) {
+        // Validate key as date
         this.data.set(key, value);
       }
     });

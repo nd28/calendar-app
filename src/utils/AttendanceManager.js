@@ -1,3 +1,4 @@
+// src/utils/AttendanceManager.js
 import DataManager from '@/utils/DataManager.js';
 
 class AttendanceManager extends DataManager {
@@ -15,7 +16,9 @@ class AttendanceManager extends DataManager {
 
   validateData(value) {
     const validStatuses = ['present', 'absent', 'leave'];
-    return typeof value === 'string' && validStatuses.includes(value.toLowerCase());
+    return (
+      typeof value === 'string' && validStatuses.includes(value.toLowerCase())
+    );
   }
 }
 

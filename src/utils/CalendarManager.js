@@ -44,11 +44,15 @@ class CalendarManager {
     const monthData = [];
 
     // Add empty slots for days before the first day of the month
-    Utility.rangeWithLambda(0, firstDay - 1, () => monthData.push(null));
+    for (let i = 0; i < firstDay; i++) {
+      monthData.push(null);
+    }
 
     // Add actual days
-    Utility.rangeWithLambda(1, daysInMonth, day => {
+    Utility.rangeWithLambda(1, daysInMonth, (day) => {
       const date = new Date(year, month, day);
+      // Ensure time part is zeroed out for consistent comparisons/keys if needed elsewhere
+      date.setHours(0, 0, 0, 0);
       const isWeekend = date.getDay() === 0 || date.getDay() === 6; // Sunday or Saturday
       monthData.push({
         date,
@@ -75,7 +79,7 @@ class CalendarManager {
       else if (status === 'leave') leaveDays++;
     });
 
-    return {presentDays, absentDays, leaveDays};
+    return { presentDays, absentDays, leaveDays };
   }
 
   exportData() {

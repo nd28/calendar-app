@@ -1,39 +1,30 @@
-import {useState} from 'react';
-import {Card, CardContent, CardHeader, CardTitle} from '@/components/ui/card.jsx';
+import {Card, CardContent} from '@/components/ui/card.jsx';
 import {Button} from '@/components/ui/button.jsx';
-import {Spinner} from '@/components/ui/spinner.jsx';
 import {Label} from '@/components/ui/label.jsx';
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-  DialogFooter,
-} from '@/components/ui/dialog';
+import {Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger} from '@/components/ui/dialog';
 import {Input} from '@/components/ui/input.jsx';
 import {toast} from 'sonner';
 
 let blocking = false;
 
-const DataImportExport = ({calendarManager, onImportSuccess}) => {
-
+const DataImportExport = ({ calendarManager, onImportSuccess }) => {
   const handleExport = () => {
     if (blocking) return;
-    toast.promise(new Promise(async (resolve, reject) => {
+    toast.promise(
+      new Promise(async (resolve, reject) => {
         blocking = true;
-        await new Promise(res => setTimeout(res, 500));
+        await new Promise((res) => setTimeout(res, 500));
         try {
           calendarManager.exportData();
           resolve();
         } catch (err) {
           reject(err.message);
         }
-      }), {
+      }),
+      {
         loading: 'Exporting...',
         success: 'Data exported successfully',
-        error: message => message,
+        error: (message) => message,
         position: 'top-center',
         finally() {
           blocking = false;
@@ -45,18 +36,21 @@ const DataImportExport = ({calendarManager, onImportSuccess}) => {
   const handleImport = async (event) => {
     const file = event.target.files[0];
     if (file) {
-      toast.promise(new Promise(async (resolve, reject) => {
+      toast.promise(
+        new Promise(async (resolve, reject) => {
           try {
-            await new Promise(res => setTimeout(res, 500));
+            await new Promise((res) => setTimeout(res, 500));
             const message = await calendarManager.importData(file, true);
+            onImportSuccess();
             resolve(message);
           } catch (err) {
             reject(err.message);
           }
-        }), {
+        }),
+        {
           loading: 'Processing...',
           success: 'Data imported successfully',
-          error: message => message,
+          error: (message) => message,
           position: 'top-center',
         },
       );
@@ -70,9 +64,7 @@ const DataImportExport = ({calendarManager, onImportSuccess}) => {
       {/*</CardHeader>*/}
       <CardContent>
         <div className="flex space-x-4">
-          <Button onClick={handleExport}>
-            Export Data
-          </Button>
+          <Button onClick={handleExport}>Export Data</Button>
 
           <Dialog>
             <DialogTrigger asChild>
